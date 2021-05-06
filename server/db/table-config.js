@@ -13,6 +13,9 @@ module.exports = (db) => {
       Slogan VARCHAR(255) NULL DEFAULT NULL,
       PRIMARY KEY (id)
     );`)
+    // .then(() => db.queryAsync(`
+    //     DROP TABLE IF EXISTS Styles;
+    // `))
     .then(() => db.queryAsync(`
         CREATE TABLE IF NOT EXISTS Styles (
           styleID INTEGER NOT NULL,
@@ -24,11 +27,14 @@ module.exports = (db) => {
           PRIMARY KEY (styleID)
         );
       `))
+    // .then(() => db.queryAsync(`
+    //     DROP TABLE IF EXISTS Photos;
+    // `))
     .then(() => db.queryAsync(`
         CREATE TABLE IF NOT EXISTS Photos (
           photoID INTEGER(255) NOT NULL AUTO_INCREMENT,
           url VARCHAR(255) NOT NULL DEFAULT 'NULL',
-          thumbnailUrl INTEGER NULL DEFAULT NULL,
+          thumbnailUrl VARCHAR(255) NULL DEFAULT NULL,
           styleID INTEGER NULL DEFAULT NULL,
           PRIMARY KEY (photoID)
         );

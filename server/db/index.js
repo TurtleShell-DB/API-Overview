@@ -7,6 +7,7 @@ const database = 'SDC';
 const connection = mysql.createConnection({
   user: 'root',
   password: 'password',
+  database,
 });
 
 const db = Promise.promisifyAll(connection, { multiArgs: true });
