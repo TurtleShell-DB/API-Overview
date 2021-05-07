@@ -5,14 +5,18 @@ module.exports = (db) => {
     db = Promise.promisifyAll(db);
   }
   return db.queryAsync(`
-    CREATE TABLE IF NOT EXISTS Product (
-      id INTEGER NOT NULL,
-      Name VARCHAR(255) NOT NULL DEFAULT 'NULL',
-      Category CHAR(30) NULL DEFAULT NULL,
-      Description VARCHAR(255) NULL DEFAULT NULL,
-      Slogan VARCHAR(255) NULL DEFAULT NULL,
-      PRIMARY KEY (id)
-    );`)
+    DROP TABLE IF EXISTS Products;
+  `)
+  // return db.queryAsync(`
+    .then(() => db.queryAsync(`
+      CREATE TABLE IF NOT EXISTS Products (
+        id INTEGER NOT NULL,
+        name VARCHAR(255) NOT NULL DEFAULT 'NULL',
+        category CHAR(30) NULL DEFAULT NULL,
+        description MEDIUMTEXT NULL DEFAULT NULL,
+        slogan VARCHAR(255) NULL DEFAULT NULL,
+        PRIMARY KEY (id)
+    );`))
     // .then(() => db.queryAsync(`
     //     DROP TABLE IF EXISTS Styles;
     // `))
@@ -27,9 +31,9 @@ module.exports = (db) => {
           PRIMARY KEY (styleID)
         );
       `))
-    // .then(() => db.queryAsync(`
-    //     DROP TABLE IF EXISTS Photos;
-    // `))
+    .then(() => db.queryAsync(`
+        DROP TABLE IF EXISTS Photos;
+    `))
     .then(() => db.queryAsync(`
         CREATE TABLE IF NOT EXISTS Photos (
           photoID INTEGER(255) NOT NULL AUTO_INCREMENT,
@@ -49,22 +53,36 @@ module.exports = (db) => {
         );
       `))
     .then(() => db.queryAsync(`
+      DROP TABLE IF EXISTS Features;
+    `))
+    .then(() => db.queryAsync(`
         CREATE TABLE IF NOT EXISTS Features (
-          id INTEGER NOT NULL AUTO_INCREMENT,
+          id INTEGER NOT NULL,
           name VARCHAR(255) NULL DEFAULT NULL,
           value VARCHAR(255) NULL DEFAULT NULL,
-          productID INTEGER NULL DEFAULT NULL,
+          productID INTEGER NOT NULL,
           PRIMARY KEY (id)
         );
       `))
     .then(() => db.queryAsync(`
+      DROP TABLE IF EXISTS Related;
+    `))
+    .then(() => db.queryAsync(`
         CREATE TABLE IF NOT EXISTS Related (
-          id INTEGER NOT NULL AUTO_INCREMENT,
-          productID1 INTEGER NULL DEFAULT NULL,
-          productID2 INTEGER NULL DEFAULT NULL,
+          id INTEGER NOT NULL,
+          productID1 INTEGER NOT NULL,
+          productID2 INTEGER NOT NULL,
           PRIMARY KEY (id)
         );
       `))
+    // .then(() => db.queryAsync(`
+    //     ALTER TABLE Products ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+    //     ALTER TABLE Styles ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+    //     ALTER TABLE Photos ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+    //     ALTER TABLE SKUs ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+    //     ALTER TABLE Features ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+    //     ALTER TABLE Related ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+    // `))
     .catch((err) => console.log(err));
 };
 
@@ -81,12 +99,12 @@ module.exports = (db) => {
 // -- Table Properties
 // -- ---
 
-// -- ALTER TABLE `Product` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-// -- ALTER TABLE `Styles` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-// -- ALTER TABLE `Photos` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-// -- ALTER TABLE `SKUs` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-// -- ALTER TABLE `Features` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-// -- ALTER TABLE `Related` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+// ALTER TABLE `Product` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+// ALTER TABLE `Styles` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+// ALTER TABLE `Photos` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+// ALTER TABLE `SKUs` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+// ALTER TABLE `Features` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+// ALTER TABLE `Related` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 // -- ---
 // -- Test Data
