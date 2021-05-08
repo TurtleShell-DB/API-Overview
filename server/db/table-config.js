@@ -5,21 +5,14 @@ module.exports = (db) => {
     db = Promise.promisifyAll(db);
   }
   return db.queryAsync(`
-    DROP TABLE IF EXISTS Products;
-  `)
-  // return db.queryAsync(`
-    .then(() => db.queryAsync(`
-      CREATE TABLE IF NOT EXISTS Products (
-        id INTEGER NOT NULL,
-        name VARCHAR(255) NOT NULL DEFAULT 'NULL',
-        category CHAR(30) NULL DEFAULT NULL,
-        description MEDIUMTEXT NULL DEFAULT NULL,
-        slogan VARCHAR(255) NULL DEFAULT NULL,
-        PRIMARY KEY (id)
-    );`))
-    // .then(() => db.queryAsync(`
-    //     DROP TABLE IF EXISTS Styles;
-    // `))
+    CREATE TABLE IF NOT EXISTS Products (
+      id INTEGER NOT NULL,
+      name VARCHAR(255) NOT NULL,
+      category CHAR(30) NULL DEFAULT NULL,
+      description MEDIUMTEXT NULL DEFAULT NULL,
+      slogan VARCHAR(255) NULL DEFAULT NULL,
+      PRIMARY KEY (id)
+    );`)
     .then(() => db.queryAsync(`
         CREATE TABLE IF NOT EXISTS Styles (
           styleID INTEGER NOT NULL,
@@ -31,9 +24,6 @@ module.exports = (db) => {
           PRIMARY KEY (styleID)
         );
       `))
-    .then(() => db.queryAsync(`
-        DROP TABLE IF EXISTS Photos;
-    `))
     .then(() => db.queryAsync(`
         CREATE TABLE IF NOT EXISTS Photos (
           photoID INTEGER(255) NOT NULL AUTO_INCREMENT,
@@ -53,9 +43,6 @@ module.exports = (db) => {
         );
       `))
     .then(() => db.queryAsync(`
-      DROP TABLE IF EXISTS Features;
-    `))
-    .then(() => db.queryAsync(`
         CREATE TABLE IF NOT EXISTS Features (
           id INTEGER NOT NULL,
           name VARCHAR(255) NULL DEFAULT NULL,
@@ -64,9 +51,6 @@ module.exports = (db) => {
           PRIMARY KEY (id)
         );
       `))
-    .then(() => db.queryAsync(`
-      DROP TABLE IF EXISTS Related;
-    `))
     .then(() => db.queryAsync(`
         CREATE TABLE IF NOT EXISTS Related (
           id INTEGER NOT NULL,
