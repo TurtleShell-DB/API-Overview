@@ -59,21 +59,16 @@ module.exports = (db) => {
           PRIMARY KEY (id)
         );
       `))
-    // .then(() => db.queryAsync(`
-    //     ALTER TABLE Products ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-    //     ALTER TABLE Styles ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-    //     ALTER TABLE Photos ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-    //     ALTER TABLE SKUs ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-    //     ALTER TABLE Features ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-    //     ALTER TABLE Related ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-    // `))
+    .then(() => db.queryAsync(`
+        ALTER TABLE Photos ADD FOREIGN KEY (styleID) REFERENCES Styles (styleID);
+        ALTER TABLE Features ADD FOREIGN KEY (productID) REFERENCES Products (id);
+        ALTER TABLE SKUs ADD FOREIGN KEY (styleID) REFERENCES Styles (styleID);
+        ALTER TABLE Styles ADD FOREIGN KEY (productID) REFERENCES Products (id);
+        ALTER TABLE Related ADD FOREIGN KEY (productID1) REFERENCES Products (id);
+        ALTER TABLE Related ADD FOREIGN KEY (productID2) REFERENCES Products (id);
+    `))
     .catch((err) => console.log(err));
 };
-
-// -- ---
-// -- Table 'Related'
-// --
-// -- ---
 
 // -- ---
 // -- Foreign Keys
