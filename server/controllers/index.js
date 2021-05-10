@@ -17,20 +17,20 @@ module.exports = {
     const args = req.params.product_id;
     model.get(args, (err, data) => {
       if (err) {
-        console.log('hey');
+        console.log(err);
       }
-      console.log('features only are ', data[0][0]);
       res.send(data[0][0]);
     });
   },
 
   styles: (req, res) => {
     console.log('from styles');
-    model.getStyle((err, data) => {
+    const args = req.params.product_id;
+    model.getStyle(args, (err, data) => {
       if (err) {
         console.log(err);
       }
-      res.end(JSON.stringify(data));
+      res.send(data[0]);
     });
   },
 
