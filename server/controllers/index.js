@@ -8,17 +8,19 @@ module.exports = {
       if (err) {
         console.log('hello');
       }
-      res.end(JSON.stringify(data));
+      res.send(data);
     });
   },
 
   product: (req, res) => {
-    console.log('from product');
-    model.get((err, data) => {
+    console.log('from single product');
+    const args = req.params.product_id;
+    model.get(args, (err, data) => {
       if (err) {
         console.log('hey');
       }
-      res.end(JSON.stringify(data));
+      console.log('features only are ', data[0][0]);
+      res.send(data[0][0]);
     });
   },
 

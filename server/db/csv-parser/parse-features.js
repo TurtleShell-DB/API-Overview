@@ -73,7 +73,7 @@ db.getConnectionAsync()
       })
       .on('end', () => {
         for (let i = 0; i < csvData.length; i += 100000) {
-          db.queryAsync('INSERT INTO Features (id, productID, name, value) VALUES ?', [csvData.slice(i, i + 100000 - 1)])
+          db.queryAsync('INSERT INTO Features (id, productID, feature, value) VALUES ?', [csvData.slice(i, i + 100000 - 1)])
             .then(() => console.log(`Successfully imported! ${i}`))
             .catch((err) => console.log(err));
         }

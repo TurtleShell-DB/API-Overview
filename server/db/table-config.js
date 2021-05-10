@@ -45,7 +45,7 @@ module.exports = (db) => {
     .then(() => db.queryAsync(`
         CREATE TABLE IF NOT EXISTS Features (
           id INTEGER NOT NULL,
-          name VARCHAR(255) NULL DEFAULT NULL,
+          feature VARCHAR(255) NULL DEFAULT NULL,
           value VARCHAR(255) NULL DEFAULT NULL,
           productID INTEGER NOT NULL,
           PRIMARY KEY (id)
@@ -60,12 +60,25 @@ module.exports = (db) => {
         );
       `))
     .then(() => db.queryAsync(`
-        ALTER TABLE Photos ADD FOREIGN KEY (styleID) REFERENCES Styles (styleID);
+        SET FOREIGN_KEY_CHECKS=0;
+    `))
+    .then(() => db.queryAsync(`
         ALTER TABLE Features ADD FOREIGN KEY (productID) REFERENCES Products (id);
-        ALTER TABLE SKUs ADD FOREIGN KEY (styleID) REFERENCES Styles (styleID);
-        ALTER TABLE Styles ADD FOREIGN KEY (productID) REFERENCES Products (id);
+    `))
+    .then(() => db.queryAsync(`
         ALTER TABLE Related ADD FOREIGN KEY (productID1) REFERENCES Products (id);
+    `))
+    .then(() => db.queryAsync(`
         ALTER TABLE Related ADD FOREIGN KEY (productID2) REFERENCES Products (id);
+    `))
+    .then(() => db.queryAsync(`
+        ALTER TABLE Styles ADD FOREIGN KEY (productID) REFERENCES Products (id);
+    `))
+    .then(() => db.queryAsync(`
+        ALTER TABLE Photos ADD FOREIGN KEY (styleID) REFERENCES Styles (styleID);
+    `))
+    .then(() => db.queryAsync(`
+        ALTER TABLE SKUs ADD FOREIGN KEY (styleID) REFERENCES Styles (styleID);
     `))
     .catch((err) => console.log(err));
 };
