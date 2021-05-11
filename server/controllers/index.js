@@ -30,17 +30,20 @@ module.exports = {
       if (err) {
         console.log(err);
       }
+      // console.log('style data from server ', data[0].results[0].photos);
       res.send(data[0]);
     });
   },
 
   related: (req, res) => {
     console.log('from related');
-    model.getRelated((err, data) => {
+    const args = req.params.product_id;
+    model.getRelated(args, (err, data) => {
       if (err) {
         console.log(err);
       }
-      res.end(JSON.stringify(data));
+      // console.log('data is ', data);
+      res.send(data);
     });
   },
 };

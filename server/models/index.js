@@ -36,7 +36,14 @@ module.exports = {
         for (let i = 0; i < stylesObj.results.length; i += 1) {
           const addPhotosSkus = db.queryAsync('SELECT thumbnailUrl, url FROM Photos WHERE styleID=?', stylesObj.results[i].styleID)
             .then((photosObj) => {
-              stylesObj.results[i].photos = photosObj[0];
+              stylesObj.results[i].photos = [];
+              for (let k = 0; k < photosObj[0].length; k += 1) {
+                stylesObj.results[i].photos.push({
+                  thumbnail_url: photosObj[0][k].thumbnailUrl,
+                  url: photosObj[0][k].url,
+                });
+              }
+              // stylesObj.results[i].photos = photosObj[0];
               return stylesObj;
             })
             .then((stylesObj) => db.queryAsync('SELECT id, quantity, size FROM SKUs WHERE styleID=?', stylesObj.results[i].styleID)
@@ -49,6 +56,7 @@ module.exports = {
                   };
                 }
                 // stylesObj.results[i].skus = skusObj[0];
+                console.log('stylesObj is ', stylesObj.results[0].photos);
                 return stylesObj;
               }));
           promises.push(addPhotosSkus);
@@ -58,20 +66,18 @@ module.exports = {
             callback(null, data);
           })
           .catch((err) => callback(err));
-        // return stylesObj;
       });
     // .then((data) => callback(null, data))
     // .catch((err) => callback(err));
   },
 
   getRelated: (args, callback) => {
-    db.queryAsync('SELECT * FROM Related', (err, data) => {
-      if (err) {
-        console.log(err);
-        callback(err);
-      } else {
-        callback(null, data);
-      }
-    });
+    db.queryAsync('SELECT productID2 FROM Related WHERE productID1=?', args)
+      .then((data) => {
+        console.log(data[0]);
+        const related = data[0].map((each) => each.productID2);
+        callback(null, related);
+      })
+      .catch((err) => callback(err));
   },
 };
