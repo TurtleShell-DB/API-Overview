@@ -28,13 +28,26 @@ module.exports = {
         const stylesObj = {
           product_id: args,
         };
-        stylesObj.results = styles[0];
+        console.log('queried styles are ', styles[0]);
+        stylesObj.results = [];
+        styles[0].forEach((style) => {
+          console.log('each style is ', style);
+          stylesObj.results.push({
+            style_id: style.styleID,
+            name: style.name,
+            original_price: style.originalPrice,
+            sale_price: style.salePrice,
+            default: style.defaultStyle,
+          });
+        });
+        // stylesObj.results = styles[0];
+        console.log('entire stylesObj is ', stylesObj);
         return stylesObj;
       })
       .then((stylesObj) => {
         const promises = [];
         for (let i = 0; i < stylesObj.results.length; i += 1) {
-          const addPhotosSkus = db.queryAsync('SELECT thumbnailUrl, url FROM Photos WHERE styleID=?', stylesObj.results[i].styleID)
+          const addPhotosSkus = db.queryAsync('SELECT thumbnailUrl, url FROM Photos WHERE styleID=?', stylesObj.results[i].style_id)
             .then((photosObj) => {
               stylesObj.results[i].photos = [];
               for (let k = 0; k < photosObj[0].length; k += 1) {
@@ -46,7 +59,7 @@ module.exports = {
               // stylesObj.results[i].photos = photosObj[0];
               return stylesObj;
             })
-            .then((stylesObj) => db.queryAsync('SELECT id, quantity, size FROM SKUs WHERE styleID=?', stylesObj.results[i].styleID)
+            .then((stylesObj) => db.queryAsync('SELECT id, quantity, size FROM SKUs WHERE styleID=?', stylesObj.results[i].style_id)
               .then((skusObj) => {
                 stylesObj.results[i].skus = {};
                 for (let j = 0; j < skusObj[0].length; j += 1) {
@@ -56,7 +69,7 @@ module.exports = {
                   };
                 }
                 // stylesObj.results[i].skus = skusObj[0];
-                console.log('stylesObj is ', stylesObj.results[0].photos);
+                // console.log('stylesObj is ', stylesObj.results);
                 return stylesObj;
               }));
           promises.push(addPhotosSkus);
