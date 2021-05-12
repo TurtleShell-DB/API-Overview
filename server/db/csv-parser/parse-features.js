@@ -1,30 +1,3 @@
-// const csv = require('csvtojson');
-// const db = require('../index.js');
-
-// const csvFilePath = './server/db/data/features.csv';
-
-// csv()
-//   .fromFile(csvFilePath)
-//   .then((jsonObj) => {
-//     jsonObj.forEach((row) => {
-//       // db.queryAsync('INSERT INTO Features (id, productID, name, value) VALUES (?)', [row.id, row.product_id, row.feature, row.value])
-//       db.queryAsync('INSERT INTO Features SET id=?, productID=?, name=?, value=?', [row.id, row.product_id, row.feature, row.value])
-//         .then(() => console.log('successfully inserted into database!'))
-//         .catch((err) => console.log(err));
-//     });
-//     /**
-//      * [
-//      * 	{a:"1", b:"2", c:"3"},
-//      * 	{a:"4", b:"5". c:"6"}
-//      * ]
-//      */
-//   })
-//   .then(() => console.log('Import Complete!'));
-
-// Async / await usage
-// const jsonArray = await csv().fromFile(csvFilePath);
-
-// const readline = require('readline');
 const fs = require('fs');
 const fastcsv = require('fast-csv');
 const mysql = require('mysql2');
@@ -58,12 +31,9 @@ db.getConnectionAsync()
     const csvStream = fastcsv
       .parse()
       .on('data', (data) => {
-        // const row = [];
-        // row.push(parseInt(data[0]), parseInt(data[1]), data[2].toString, data[3].toString);
         if (data[0] === 'id') {
           console.log('removed header');
         } else {
-          // console.log(data);
           csvData.push(data);
           count++;
         }
@@ -79,5 +49,32 @@ db.getConnectionAsync()
         }
       });
     stream.pipe(csvStream);
-    // };
   });
+
+  // const csv = require('csvtojson');
+// const db = require('../index.js');
+
+// const csvFilePath = './server/db/data/features.csv';
+
+// csv()
+//   .fromFile(csvFilePath)
+//   .then((jsonObj) => {
+//     jsonObj.forEach((row) => {
+//       // db.queryAsync('INSERT INTO Features (id, productID, name, value) VALUES (?)', [row.id, row.product_id, row.feature, row.value])
+//       db.queryAsync('INSERT INTO Features SET id=?, productID=?, name=?, value=?', [row.id, row.product_id, row.feature, row.value])
+//         .then(() => console.log('successfully inserted into database!'))
+//         .catch((err) => console.log(err));
+//     });
+//     /**
+//      * [
+//      * 	{a:"1", b:"2", c:"3"},
+//      * 	{a:"4", b:"5". c:"6"}
+//      * ]
+//      */
+//   })
+//   .then(() => console.log('Import Complete!'));
+
+// Async / await usage
+// const jsonArray = await csv().fromFile(csvFilePath);
+
+// const readline = require('readline');

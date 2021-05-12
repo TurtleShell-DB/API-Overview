@@ -47,5 +47,4 @@ db.getConnectionAsync()
         }
       });
     stream.pipe(csvStream);
-    // };
   });

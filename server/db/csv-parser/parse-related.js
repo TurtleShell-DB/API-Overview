@@ -39,11 +39,8 @@ db.getConnectionAsync()
         }
       })
       .on('end', () => {
-        // remove the first line: header
         csvData.shift();
 
-        // connect to the MySQL database
-        // save csvData
         for (let i = 0; i < csvData.length; i += 100000) {
           db.queryAsync('INSERT INTO Related (id, productID1, productID2) VALUES ?', [csvData.slice(i, i + 100000 - 1)])
             .then(() => console.log(`Successfully imported! ${i}`))
@@ -52,6 +49,3 @@ db.getConnectionAsync()
       });
     stream.pipe(csvStream);
   });
-
-// Async / await usage
-// const jsonArray = await csv().fromFile(csvFilePath);

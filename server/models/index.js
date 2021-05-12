@@ -73,14 +73,11 @@ module.exports = {
           })
           .catch((err) => callback(err));
       });
-    // .then((data) => callback(null, data))
-    // .catch((err) => callback(err));
   },
 
   getRelated: (args, callback) => {
     db.queryAsync('SELECT productID2 FROM Related WHERE productID1=?', args)
       .then((data) => {
-        // console.log(data[0]);
         const related = data[0].map((each) => each.productID2);
         callback(null, related);
       })
