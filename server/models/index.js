@@ -28,10 +28,8 @@ module.exports = {
         const stylesObj = {
           product_id: args,
         };
-        console.log('queried styles are ', styles[0]);
         stylesObj.results = [];
         styles[0].forEach((style) => {
-          console.log('each style is ', style);
           stylesObj.results.push({
             style_id: style.styleID,
             name: style.name,
@@ -40,8 +38,6 @@ module.exports = {
             default: style.defaultStyle,
           });
         });
-        // stylesObj.results = styles[0];
-        console.log('entire stylesObj is ', stylesObj);
         return stylesObj;
       })
       .then((stylesObj) => {
@@ -56,7 +52,6 @@ module.exports = {
                   url: photosObj[0][k].url,
                 });
               }
-              // stylesObj.results[i].photos = photosObj[0];
               return stylesObj;
             })
             .then((stylesObj) => db.queryAsync('SELECT id, quantity, size FROM SKUs WHERE styleID=?', stylesObj.results[i].style_id)
@@ -68,8 +63,6 @@ module.exports = {
                     size: skusObj[0][j].size,
                   };
                 }
-                // stylesObj.results[i].skus = skusObj[0];
-                // console.log('stylesObj is ', stylesObj.results);
                 return stylesObj;
               }));
           promises.push(addPhotosSkus);
@@ -87,7 +80,7 @@ module.exports = {
   getRelated: (args, callback) => {
     db.queryAsync('SELECT productID2 FROM Related WHERE productID1=?', args)
       .then((data) => {
-        console.log(data[0]);
+        // console.log(data[0]);
         const related = data[0].map((each) => each.productID2);
         callback(null, related);
       })

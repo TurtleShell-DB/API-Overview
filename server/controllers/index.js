@@ -3,7 +3,7 @@ const model = require('../models');
 
 module.exports = {
   products: (req, res) => {
-    console.log('from products');
+    //console.log('from products');
     model.getAll((err, data) => {
       if (err) {
         console.log('hello');
@@ -13,7 +13,7 @@ module.exports = {
   },
 
   product: (req, res) => {
-    console.log('from single product');
+    //console.log('from single product');
     const args = req.params.product_id;
     model.get(args, (err, data) => {
       if (err) {
@@ -24,7 +24,7 @@ module.exports = {
   },
 
   styles: (req, res) => {
-    console.log('from styles');
+    //console.log('from styles');
     const args = req.params.product_id;
     model.getStyle(args, (err, data) => {
       if (err) {
@@ -36,7 +36,7 @@ module.exports = {
   },
 
   related: (req, res) => {
-    console.log('from related');
+    //console.log('from related');
     const args = req.params.product_id;
     model.getRelated(args, (err, data) => {
       if (err) {

@@ -80,6 +80,52 @@ module.exports = (db) => {
     .then(() => db.queryAsync(`
         ALTER TABLE SKUs ADD FOREIGN KEY (styleID) REFERENCES Styles (styleID);
     `))
+    // .then(() => db.queryAsync(`
+    //     ALTER TABLE Products ADD INDEX products_idx (id);
+    //     ALTER TABLE Styles ADD INDEX styles_idx (styleID, productID);
+    //     ALTER TABLE Features ADD INDEX feature_idx (productID);
+    //     ALTER TABLE Photos ADD INDEX photos_idx (styleID);
+    //     ALTER TABLE SKUs ADD INDEX skus_idx (styleID);
+    //     ALTER TABLE Related ADD INDEX related_idx (prouctID1, productID2);
+    // `))
+
+    // .then(() => db.queryAsync(`
+    // ALTER TABLE Products DROP INDEX products_idx;
+    // `))
+    // .then(() => db.queryAsync(`
+    // ALTER TABLE Styles DROP INDEX styles_idx;
+    // `))
+    // .then(() => db.queryAsync(`
+    // ALTER TABLE Features DROP INDEX feature_idx;
+    // `))
+    // .then(() => db.queryAsync(`
+    // ALTER TABLE Photos DROP INDEX photos_idx;
+    // `))
+    // .then(() => db.queryAsync(`
+    // ALTER TABLE SKUs DROP INDEX skus_idx;
+    // `))
+    // .then(() => db.queryAsync(`
+    // ALTER TABLE Related DROP INDEX related_idx;
+    // `))
+
+    .then(() => db.queryAsync(`
+    ALTER TABLE Products ADD INDEX products_idx (id);
+    `))
+    .then(() => db.queryAsync(`
+    ALTER TABLE Styles ADD INDEX styles_idx (styleID, productID);
+    `))
+    .then(() => db.queryAsync(`
+    ALTER TABLE Features ADD INDEX feature_idx (productID);
+    `))
+    .then(() => db.queryAsync(`
+    ALTER TABLE Photos ADD INDEX photos_idx (styleID);
+    `))
+    .then(() => db.queryAsync(`
+    ALTER TABLE SKUs ADD INDEX skus_idx (styleID);
+    `))
+    .then(() => db.queryAsync(`
+    ALTER TABLE Related ADD INDEX related_idx (prouctID1, productID2);
+    `))
     .catch((err) => console.log(err));
 };
 
