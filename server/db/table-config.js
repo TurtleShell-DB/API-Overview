@@ -62,24 +62,24 @@ module.exports = (db) => {
     .then(() => db.queryAsync(`
         SET FOREIGN_KEY_CHECKS=0;
     `))
-    .then(() => db.queryAsync(`
-        ALTER TABLE Features ADD FOREIGN KEY (productID) REFERENCES Products (id);
-    `))
-    .then(() => db.queryAsync(`
-        ALTER TABLE Related ADD FOREIGN KEY (productID1) REFERENCES Products (id);
-    `))
-    .then(() => db.queryAsync(`
-        ALTER TABLE Related ADD FOREIGN KEY (productID2) REFERENCES Products (id);
-    `))
-    .then(() => db.queryAsync(`
-        ALTER TABLE Styles ADD FOREIGN KEY (productID) REFERENCES Products (id);
-    `))
-    .then(() => db.queryAsync(`
-        ALTER TABLE Photos ADD FOREIGN KEY (styleID) REFERENCES Styles (styleID);
-    `))
-    .then(() => db.queryAsync(`
-        ALTER TABLE SKUs ADD FOREIGN KEY (styleID) REFERENCES Styles (styleID);
-    `))
+    //.then(() => db.queryAsync(`
+    //    ALTER TABLE Features ADD FOREIGN KEY (productID) REFERENCES Products (id);
+    //`))
+    //.then(() => db.queryAsync(`
+    //    ALTER TABLE Related ADD FOREIGN KEY (productID1) REFERENCES Products (id);
+    //`))
+    //.then(() => db.queryAsync(`
+    //    ALTER TABLE Related ADD FOREIGN KEY (productID2) REFERENCES Products (id);
+    //`))
+    //.then(() => db.queryAsync(`
+    //    ALTER TABLE Styles ADD FOREIGN KEY (productID) REFERENCES Products (id);
+    //`))
+    //.then(() => db.queryAsync(`
+    //    ALTER TABLE Photos ADD FOREIGN KEY (styleID) REFERENCES Styles (styleID);
+    //`))
+    //.then(() => db.queryAsync(`
+    //    ALTER TABLE SKUs ADD FOREIGN KEY (styleID) REFERENCES Styles (styleID);
+    //`))
     // .then(() => db.queryAsync(`
     //     ALTER TABLE Products ADD INDEX products_idx (id);
     //     ALTER TABLE Styles ADD INDEX styles_idx (styleID, productID);
@@ -108,24 +108,24 @@ module.exports = (db) => {
     // ALTER TABLE Related DROP INDEX related_idx;
     // `))
 
-    .then(() => db.queryAsync(`
-    ALTER TABLE Products ADD INDEX products_idx (id);
-    `))
-    .then(() => db.queryAsync(`
-    ALTER TABLE Styles ADD INDEX styles_idx (styleID, productID);
-    `))
-    .then(() => db.queryAsync(`
-    ALTER TABLE Features ADD INDEX feature_idx (productID);
-    `))
-    .then(() => db.queryAsync(`
-    ALTER TABLE Photos ADD INDEX photos_idx (styleID);
-    `))
-    .then(() => db.queryAsync(`
-    ALTER TABLE SKUs ADD INDEX skus_idx (styleID);
-    `))
-    .then(() => db.queryAsync(`
-    ALTER TABLE Related ADD INDEX related_idx (prouctID1, productID2);
-    `))
+    //.then(() => db.queryAsync(`
+    //ALTER TABLE Products ADD INDEX products_idx (id);
+    //`))
+    //.then(() => db.queryAsync(`
+    //ALTER TABLE Styles ADD INDEX styles_idx (styleID, productID);
+    //`))
+    //.then(() => db.queryAsync(`
+    //ALTER TABLE Features ADD INDEX feature_idx (productID);
+    //`))
+    //.then(() => db.queryAsync(`
+    //ALTER TABLE Photos ADD INDEX photos_idx (styleID);
+    //`))
+    //.then(() => db.queryAsync(`
+    //ALTER TABLE SKUs ADD INDEX skus_idx (styleID);
+    //`))
+    //.then(() => db.queryAsync(`
+    //ALTER TABLE Related ADD INDEX related_idx (prouctID1, productID2);
+    //`))
     .catch((err) => console.log(err));
 };
 

@@ -7,7 +7,9 @@ const createTables = require('./table-config');
 const database = 'SDC';
 
 const connection = mysql.createConnection({
-  user: 'root',
+  host: 'rds-mysql-sdcproducts.cxo4btznuoes.us-east-1.rds.amazonaws.com',
+  user: 'humbugger',
+  port: 3306,
   password: 'password',
   database,
   multipleStatements: true,
