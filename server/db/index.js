@@ -6,7 +6,7 @@ const createTables = require('./table-config');
 
 const database = 'SDC';
 
-const connection = mysql.createConnection({
+const connection = mysql.createPool({
   host: 'rds-mysql-sdcproducts.cxo4btznuoes.us-east-1.rds.amazonaws.com',
   user: 'humbugger',
   port: 3306,
@@ -17,7 +17,7 @@ const connection = mysql.createConnection({
 
 const db = Promise.promisifyAll(connection, { multiArgs: true });
 
-db.connectAsync()
+db.getConnectionAsync()
   .then(() => console.log(`Connected to ${database} database as ID ${db.threadId}`))
   .then(() => db.queryAsync(`CREATE DATABASE IF NOT EXISTS ${database}`))
   .then(() => db.queryAsync(`USE ${database}`))
