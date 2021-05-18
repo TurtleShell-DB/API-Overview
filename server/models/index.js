@@ -17,7 +17,7 @@ module.exports = {
             productObj[0][0].features = featureObj[0];
             return productObj;
           })
-          .then((data) => callback(null, data))
+          .then((data) => callback(null, data[0][0]))
           .catch((err) => callback(err));
       });
   },
@@ -69,7 +69,7 @@ module.exports = {
         }
         Promise.all(promises)
           .then((data) => {
-            callback(null, data);
+            callback(null, data[0]);
           })
           .catch((err) => callback(err));
       });
