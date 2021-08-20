@@ -1,6 +1,3 @@
-# API-Overview
-API Product Overview
-
 # Weyland Software Inc. 
 ### _Providing a smooth online shopping experience for casual streetwear enthusiasts._
 
